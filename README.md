@@ -33,10 +33,6 @@ def target_all():
     for src in src_files:
         obj = src.replace("src\\","bin\\").replace(".cpp",".o")
         obj_files.append(obj)
-        #if exists(obj) and not hasfilechanged_md5(src):
-        #    print(f"[DEMO] {src} has not been changed since last run! Ignoring.")
-        #    continue # ignore all old files at compilation, but not at link
-
         v = runCommand(["g++","-c","-Isrc/",src,"-o",obj],shell=True) # shell = True for windows
     runCommand_os(f"g++ -o bin\\hello.exe {' '.join(obj_files)}")
 
