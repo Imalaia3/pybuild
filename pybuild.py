@@ -153,15 +153,16 @@ class PyBuildArgMaker:
     
     # runs the program. argv should be sys.argv however it can be changed as long as the element 1 (second element) is the target string
     def run(self,argv: list) -> None:
-        target = argv[1]
-        if target not in self.targets.keys():
-            print(f"*** Error ***: No target named '{target}' was found!")
-            return None
-        elif len(argv) < 2 and len(self.targets.keys()) > 1:
+        if len(argv) < 2 and len(self.targets.keys()) > 1:
             print("*** Error ***: No target has been supplied and the target count is higher than one!")
             return None
         elif len(argv) < 2 and len(self.targets.keys()) == 1:
-            print(f"*** Note ***: No target supplied. Defaulting to target {self.targets.keys()[0]}.")
-            self.targets[self.targets.keys[0]]()
+            print(f"*** Note ***: No target supplied. Defaulting to target {list(self.targets.keys())[0]}.")
+            self.targets[list(self.targets.keys())[0]]()
+            return None
+
+        target = argv[1]
+        if target not in self.targets.keys():
+            print(f"*** Error ***: No target named '{target}' was found!")
             return None
         self.targets[target]()
