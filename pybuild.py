@@ -46,7 +46,9 @@ def runCommand(command: list,shell = False) -> str:
     return res.stdout
 
 # runs a command using os.system() without getting the command output
-def runCommand_os(command:str)->None:
+def runCommand_os(command:str, echoCommand=True)->None:
+    if echoCommand:
+        print(command)
     os.system(command)
 
 # returns True if path exists, False if it does not
@@ -74,9 +76,12 @@ def getFilesRecursive(beginpath: str) -> list[str]:
 def listFilesWithExt(path: str, ext: str) -> list[str]:
     files = []
     for file in listFiles(path):
-        if getFileExtension(path) == ext:
-            files.append(file)
+        if getFileExtension(file) == ext:
+            files.append(os.path.join(path,file))
     return files
+
+def listToString(listIn: list, sep=" ") -> str:
+    return sep.join(listIn)
 
 # deletes a file
 def delFile(path):
