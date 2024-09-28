@@ -1,14 +1,4 @@
-"""
-###### PyBuild ######
-# A Python only build
-# system, designed for
-# people that are familiar
-# with the python language
-# but find Make/CMake way
-# too complex.
-#####################
-"""
-
+# A Python only build system.
 import os,subprocess
 import hashlib
 
@@ -40,13 +30,16 @@ def replacePaths(a: str,b: str,paths: list) -> list[str]:
         out.append(p.replace(a,b))
     return out
 
-# runs a command using subprocess.run() and get the stdout (not stderr)
-def runCommand(command: list,shell = False) -> str:
+
+def runCommand(command: list,shell = False, legacy=False) -> subprocess.CompletedProcess | bytes:
+    print(listToString(command))
     res = subprocess.run(command, stdout=subprocess.PIPE,shell=shell)
-    return res.stdout
+    if legacy:
+        return res.stdout
+    return res
 
 # runs a command using os.system() without getting the command output
-def runCommand_os(command:str, echoCommand=True)->None:
+def runCommand_os(command:str, echoCommand=False)->None:
     if echoCommand:
         print(command)
     os.system(command)
